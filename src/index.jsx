@@ -11,6 +11,13 @@ export class Tab extends Component {
     }
   }
 
+  static propTypes = {
+    cls: PropTypes.string,
+    style: PropTypes.object,
+    actived: PropTypes.string,
+    onSwitch: PropTypes.func
+  }
+
   switchTab(tabKey) {
     var {onSwitch = function(){}} = this.props;
     this.selectedTabs[tabKey] = true;
@@ -96,6 +103,14 @@ export class Tab extends Component {
 }
 
 export class TabPanel extends Component {
+
+  static propTypes = {
+    cls: PropTypes.string,
+    style: PropTypes.object,
+    tabKey: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired
+  }
+
   render() {
     var {cls, style, isShow, isRenderChild} = this.props;
     var display = isShow ? 'block' : 'none';
