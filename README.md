@@ -12,7 +12,7 @@ npm --registry=http://r.npm.sankuai.com install @mtfe/react-tab
 ## Development
 
 ```
-git clone [Please fill your git repo here]
+git clone [git@github.com:sprintsun/react-tab.git]
 npm --registry=http://r.npm.sankuai.com install
 npm start
 ```
@@ -27,13 +27,24 @@ React.render(<Component />, container);
 
 ## API
 
-### props
-
+### Tab.props
 
 | 参数       | 说明                                        | 类型      |  可选值        | 默认值  |
 |------------|---------------------------------------------|-----------|----------------|---------|
-|  name      |  指定显示的名字                             | int       |  任意非负整数  |  0      |
-|  onClick   |  点击时的回调函数                           | function  |                |  noop   |
+|  cls      |  组件class                       | string    |                         |  aloha-file-upload|
+|  style      |  自定义样式                      | object    |                         |  {}|
+|  actived      |  指定激活的TabPanel                             | string       |  TabPanel中指定的tabKey  |  null      |
+|  onSwitch   |  切换Tab时的回调函数                           | function  |                |  noop   |
+
+### TabPanel.props
+
+| 参数       | 说明                                        | 类型      |  可选值        | 默认值  |
+|------------|---------------------------------------------|-----------|----------------|---------|
+|  cls      |  组件class                       | string    |                         |  aloha-file-upload|
+|  style      |  自定义样式                      | object    |                         |  {}|
+|  actived      |  指定激活的TabPanel                             | string       |  TabPanel中指定的tabKey  |  null      |
+|  onSwitch   |  切换Tab时的回调函数                           | function  |                |  noop   |
+
 
 ## License
 

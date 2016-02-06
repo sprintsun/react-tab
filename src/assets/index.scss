@@ -1,0 +1,27 @@
+.aloha-tab {
+
+  &-item {
+    padding: 0 15px 10px;
+    border-bottom: 1px solid #e5e5e5;
+
+    .item {
+      display: inline-block;
+      margin-right: 50px;
+      cursor: pointer;
+    }
+
+    .item:hover {
+      color: #35c0b2;
+    }
+
+    .item-on {
+      color: #35c0b2;
+    }
+  }
+
+  &-panel {
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+  }
+}
