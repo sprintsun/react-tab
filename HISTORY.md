@@ -3,3 +3,6 @@ HISTORY
 
 ## 0.0.1
 first commit
+
+## 0.0.2
+修复无法正确编译.scss文件的问题
