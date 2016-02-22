@@ -14,9 +14,14 @@ export default class Page extends React.Component {
     }
   }
 
+  onSwitch(tabKey) {
+    this.setState({actived: tabKey});
+    console.log('tabKey: ', tabKey);
+  }
+
   render() {
     return (
-      <Tab actived={this.state.actived} onSwitch={(tabKey) => {console.log('tabKey: ', tabKey)}}>
+      <Tab actived={this.state.actived} onSwitch={this.onSwitch.bind(this)}>
         <TabPanel title="Tab1" tabKey='tab1'>
           <div>
             <p>hello world</p>

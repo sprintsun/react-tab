@@ -5,10 +5,18 @@ export class Tab extends Component {
 
   constructor() {
     super();
+    this.currTab = ''; // 当前选中的tab
     this.selectedTabs = {}; // 记录选中过的tab
     this.state = {
       actived: ''
     }
+  }
+
+  static defaultProps = {
+    cls: '',
+    style: {},
+    actived: null,
+    onSwitch: function() {}
   }
 
   static propTypes = {
@@ -21,6 +29,7 @@ export class Tab extends Component {
   switchTab(tabKey) {
     var {onSwitch = function(){}} = this.props;
     this.selectedTabs[tabKey] = true;
+    this.currTab = tabKey;
     this.setState({'actived': tabKey});
     typeof onSwitch == 'function' && onSwitch(tabKey);
   }
@@ -43,7 +52,9 @@ export class Tab extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    nextProps.actived != this.state.actived && this.switchTab(nextProps.actived)
+    this.props.actived != nextProps.actived &&
+    this.currTab != nextProps.actived &&
+    this.switchTab(nextProps.actived)
   }
 
   renderTabItem() {
@@ -52,29 +63,29 @@ export class Tab extends Component {
     var {cls, style} = this.props;
     var tabKeyList = [];
     return (
-        <ul className="aloha-tab-item">
-          {
-            React.Children.map(this.props.children, (tab, index) => {
-              if(!tab) {
-                return;
-              }
+      <ul className="aloha-tab-item">
+        {
+          React.Children.map(this.props.children, (tab, index) => {
+            if(!tab) {
+              return;
+            }
 
-              let {tabKey, title} = tab.props;
-              if (tabKey) {
-                if(~tabKeyList.indexOf(tabKey)) {
-                  console.error('props tabKey in TabPanel is not allowed to repeat!');
-                } else {
-                  tabKeyList.push(tabKey);
-                  let cls = "item " + (tabKey == actived ? "item-on " : "") + cls;
-                  let handler = self.switchTab.bind(self, tabKey);
-                  return <li className={cls} key={index} onClick={handler} style={style}>{title}</li>
-                }
+            let {tabKey, title} = tab.props;
+            if (tabKey) {
+              if(~tabKeyList.indexOf(tabKey)) {
+                console.error('props tabKey in TabPanel is not allowed to repeat!');
               } else {
-                console.error('props tabKey in TabPanel is require!');
+                tabKeyList.push(tabKey);
+                let className = "item " + (tabKey == actived ? "item-on " : "") + cls;
+                let handler = self.switchTab.bind(self, tabKey);
+                return <li className={className} key={index} onClick={handler} style={style}>{title}</li>
               }
-            })
-          }
-        </ul>
+            } else {
+              console.error('props tabKey in TabPanel is require!');
+            }
+          })
+        }
+      </ul>
     )
   }
 
@@ -94,10 +105,10 @@ export class Tab extends Component {
 
   render() {
     return (
-        <div className="aloha-tab">
-          {this.renderTabItem()}
-          {this.renderChild()}
-        </div>
+      <div className="aloha-tab">
+        {this.renderTabItem()}
+        {this.renderChild()}
+      </div>
     )
   }
 }
@@ -111,10 +122,15 @@ export class TabPanel extends Component {
     title: PropTypes.string.isRequired
   }
 
+  static defaultProps = {
+    cls: '',
+    style: {}
+  }
+
   render() {
     var {cls, style, isShow, isRenderChild} = this.props;
     var display = isShow ? 'block' : 'none';
-    var cls = 'aloha-tab-panel ' + (cls || '');
+    var cls = 'aloha-tab-panel ' + cls;
     var style = Object.assign({display: display}, style);
     return <div className={cls} style={style}>{isRenderChild ? this.props.children : null}</div>
   }
